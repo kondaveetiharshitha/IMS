@@ -1,48 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Register | IMS</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body class="login-page">
-  <div class="login-container">
-    <h2>REGISTER</h2>
-    <form id="register-form">
-      <input type="text" id="username" placeholder="Full Name" required />
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="password" id="password" placeholder="Password" required />
-      <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-      <button type="submit">REGISTER</button>
-      <p>Already have an account? <a href="login.html">Login Here</a></p>
-    </form>
-  </div>
+<!-- Same style as login -->
+<!-- Adds user role: admin / staff -->
+<!-- Stores in localStorage["users"] -->
 
-  <script>
-    document.getElementById('register-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const username = document.getElementById('username').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-
-      if (password !== confirmPassword) {
-        alert("Passwords do not match!");
-        return;
-      }
-
-      let users = JSON.parse(localStorage.getItem('users')) || {};
-      if (users[email]) {
-        alert("User already exists!");
-        return;
-      }
-
-      users[email] = { username, password, inventory: [] };
-      localStorage.setItem('users', JSON.stringify(users));
-      alert("Registered successfully! Redirecting to login.");
-      window.location.href = "login.html";
-    });
-  </script>
-</body>
-</html>
+<form id="register-form">
+  <input type="text" id="username" placeholder="Full Name" required />
+  <input type="email" id="email" placeholder="Email" required />
+  <input type="password" id="password" placeholder="Password" required />
+  <select id="role" required>
+    <option value="staff">Staff</option>
+    <option value="admin">Admin</option>
+  </select>
+  <button type="submit">REGISTER</button>
+  <p>Already have an account? <a href="login.html">Login</a></p>
+</form>
