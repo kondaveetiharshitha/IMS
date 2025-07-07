@@ -3,19 +3,18 @@ const userDisplay = document.getElementById('user-name');
 const form = document.getElementById('product-form');
 const table = document.querySelector('#product-table tbody');
 
-let users = JSON.parse(localStorage.getItem('users')) || {};
-let currentUserData = users[user] || { inventory: [] };
-let editIndex = -1;
-
-if (!user || !currentUserData) {
-  window.location.href = 'index.html';
+if (!user) {
+  window.location.href = 'login.html';
 }
 
 if (userDisplay) userDisplay.innerText = user;
 
+let inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+let editIndex = -1;
+
 function renderInventory() {
   table.innerHTML = '';
-  currentUserData.inventory.forEach((item, index) => {
+  inventory.forEach((item, index) => {
     table.innerHTML += `
       <tr>
         <td>${item.name}</td>
@@ -39,9 +38,8 @@ function renderInventory() {
   });
 }
 
-function save() {
-  users[user] = currentUserData;
-  localStorage.setItem('users', JSON.stringify(users));
+function saveInventory() {
+  localStorage.setItem('inventory', JSON.stringify(inventory));
 }
 
 form?.addEventListener('submit', (e) => {
@@ -55,27 +53,27 @@ form?.addEventListener('submit', (e) => {
   const product = { name, quantity, price, category, status };
 
   if (editIndex === -1) {
-    currentUserData.inventory.push(product);
+    inventory.push(product);
   } else {
-    currentUserData.inventory[editIndex] = product;
+    inventory[editIndex] = product;
     editIndex = -1;
   }
 
-  save();
+  saveInventory();
   renderInventory();
   form.reset();
 });
 
 window.deleteProduct = (index) => {
-  if (confirm('Delete this item?')) {
-    currentUserData.inventory.splice(index, 1);
-    save();
+  if (confirm('Are you sure to delete?')) {
+    inventory.splice(index, 1);
+    saveInventory();
     renderInventory();
   }
 };
 
 window.editProduct = (index) => {
-  const item = currentUserData.inventory[index];
+  const item = inventory[index];
   document.getElementById('name').value = item.name;
   document.getElementById('quantity').value = item.quantity;
   document.getElementById('price').value = item.price;
@@ -84,14 +82,14 @@ window.editProduct = (index) => {
   editIndex = index;
 };
 
-window.updateStatus = (index, newStatus) => {
-  currentUserData.inventory[index].status = newStatus;
-  save();
+window.updateStatus = (index, status) => {
+  inventory[index].status = status;
+  saveInventory();
 };
 
 window.logout = () => {
   localStorage.removeItem('currentUser');
-  window.location.href = 'index.html';
+  window.location.href = 'login.html';
 };
 
 renderInventory();
