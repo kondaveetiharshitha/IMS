@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventory Management System</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Inventory Management</h1>
+
+    <form id="inventory-form">
+      <input type="text" id="name" placeholder="Item Name" required />
+      <input type="number" id="quantity" placeholder="Quantity" required />
+      <input type="number" id="price" placeholder="Price (₹)" required />
+      <input type="text" id="category" placeholder="Category" required />
+      <button type="submit">Add Item</button>
+    </form>
+
+    <h2>Inventory List</h2>
+    <table id="inventory-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Category</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div id="summary">
+      <p>Total Items: <span id="total-items">0</span></p>
+      <p>Total Value: ₹<span id="total-value">0</span></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
